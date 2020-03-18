@@ -8,7 +8,8 @@
 
 package com.mallivora.fabric.k8s.orderer;
 
-import io.kubernetes.client.proto.V1.Pod;
+import com.mallivora.fabric.k8s.DeploymentFactory;
+import io.kubernetes.client.proto.V1Apps;
 
 /**
 * ClassName:OrdererDeployment <br/>
@@ -20,9 +21,14 @@ import io.kubernetes.client.proto.V1.Pod;
 * @since JDK 1.8
 * @see
 */
-public class OrdererDeployment {
-    
+public class OrdererDeployment implements DeploymentFactory {
+
     public static void main(String[] args) {
+    }
+
+    @Override
+    public V1Apps.Deployment createDeployment() {
+        return null;
     }
 
 }
