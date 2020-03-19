@@ -2,8 +2,6 @@ package com.mallivora.fabric.k8s.peer;
 
 import com.mallivora.fabric.k8s.Container;
 import static com.mallivora.fabric.k8s.FabricContainerEnvConstant.*;
-import static com.mallivora.fabric.k8s.FabricContainerEnvConstant.CORE_PEER_GOSSIP_BOOTSTRAP_NAME;
-
 import com.mallivora.fabric.k8s.FabricDeployment;
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
@@ -45,7 +43,7 @@ public class PeerDeployment extends FabricDeployment {
                             add(new V1ContainerPort().containerPort(7052));
                             add(new V1ContainerPort().containerPort(7053));
                         }
-                    }).env(createEnvVars(createPeerEnvVarMap())).command(strings)
+                    }).command(strings)
                     .workingDir("/opt/gopath/src/github.com/hyperledger/fabric/peer")
                     .volumeMounts(createVolumeMounts(null)));
             }
@@ -65,7 +63,7 @@ public class PeerDeployment extends FabricDeployment {
                     {
                         put("app-k8s", "peer-k8s");
                     }
-                })).spec(new V1PodSpec().containers(list).volumes(createVolumes()))))
+                })).spec(new V1PodSpec().containers(list).volumes(createVolumes(null)))))
             .build();
 
         System.out.println(Yaml.dump(deployment));
@@ -83,12 +81,6 @@ public class PeerDeployment extends FabricDeployment {
 
     }
 
-    public static List<V1Volume> createVolumes() {
-        List<V1Volume> list = new ArrayList<V1Volume>();
-        list.add(new V1Volume().name("current-dir").hostPath(new V1HostPathVolumeSource().path("/workspace").type("Directory")));
-        list.add(new V1Volume().name("run").hostPath(new V1HostPathVolumeSource().path("/var/run").type("Directory")));
-        return list;
-    }
 
     public static V1Container createContainer(String name, String image, Map<String, String> envVarsMap,
         List<Map<String, String>> volumeMounts) {
@@ -97,7 +89,9 @@ public class PeerDeployment extends FabricDeployment {
             .build();
     }
 
-    public static List<V1Container> createContainers(List<Container> containers) {
+
+
+    public List<V1Container> createContainers(List<Container> containers) {
         List<V1Container> v1Containers = new ArrayList<V1Container>();
         for (Container container : containers) {
             v1Containers.add(createContainer(container.getName(), container.getImage(), container.getEnvVarsMap(),
@@ -121,7 +115,7 @@ public class PeerDeployment extends FabricDeployment {
             String path = map.get("mountPath");
         }*/
 
-/*        v1VolumeMounts.add(createVolumeMount("current-dir", "/etc/hyperledger/fabric/msp",
+        /*        v1VolumeMounts.add(createVolumeMount("current-dir", "/etc/hyperledger/fabric/msp",
             "crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp"));*/
         v1VolumeMounts.add(createVolumeMount("current-dir", "/etc/hyperledger/fabric/tls",
             "crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls"));
@@ -141,16 +135,10 @@ public class PeerDeployment extends FabricDeployment {
         return envVars;
     }
 
-    public static Map<String, String> createEnvVarMap(String kind) {
-        if ("PEER".equals(kind)) {
-            return createPeerEnvVarMap();
-        } else if ("ORDERER".equals(kind)) {
 
-        }
-        return null;
-    }
 
-    public static Map<String, String> createPeerEnvVarMap() {
+    @Override
+    protected Map<String, String> createEnvVarMap() {
         Map<String, String> evnVarMap = new HashMap<String, String>();
         evnVarMap.put(CORE_VM_ENDPOINT_NAME, CORE_VM_ENDPOINT);
         evnVarMap.put(CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE_NAME, CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE);
@@ -173,18 +161,14 @@ public class PeerDeployment extends FabricDeployment {
         return evnVarMap;
     }
 
-    @Override
-    protected void createContainers() {
-
-    }
 
     @Override
-    protected V1ObjectMeta createMetadata() {
+    protected V1PodTemplateSpec createPodTemplateSpec() {
         return null;
     }
 
     @Override
-    protected V1PodTemplateSpec createPodTemplateSpec() {
+    protected V1PodSpec createPodSpec(List<Container> containers) {
         return null;
     }
 
