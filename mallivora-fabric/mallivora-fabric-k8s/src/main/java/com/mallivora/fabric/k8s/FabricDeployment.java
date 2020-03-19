@@ -1,6 +1,7 @@
 package com.mallivora.fabric.k8s;
 
 import com.mallivora.fabric.k8s.orderer.OrdererDeployment;
+import io.kubernetes.client.ApiException;
 import io.kubernetes.client.models.*;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public abstract class FabricDeployment {
 
     protected abstract V1PodTemplateSpec createPodTemplateSpec();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ApiException {
         FabricDeployment ordererDeployment = new OrdererDeployment();
         V1Deployment deployment = ordererDeployment.createDeployment();
     }
