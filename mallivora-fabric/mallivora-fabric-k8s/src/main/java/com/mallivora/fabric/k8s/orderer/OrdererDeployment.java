@@ -4,25 +4,19 @@
  */
 
 package com.mallivora.fabric.k8s.orderer;
-
 import com.mallivora.fabric.k8s.Container;
 import com.mallivora.fabric.k8s.FabricDeployment;
 import io.kubernetes.client.models.*;
-
-import static com.mallivora.fabric.k8s.FabricDeployment.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.mallivora.fabric.k8s.FabricContainerEnvConstant.*;
-import static com.mallivora.fabric.k8s.FabricContainerEnvConstant.CORE_PEER_LOCALMSPID;
-
 /**
  * ClassName:OrdererDeployment <br/>
  * Function: TODO ADD FUNCTION. <br/>
  * Reason: TODO ADD REASON. <br/>
  * Date: 2020年3月16日 上午11:11:40 <br/>
- * 
  * @author 9527
  * @version
  * @since JDK 1.8
@@ -30,32 +24,6 @@ import static com.mallivora.fabric.k8s.FabricContainerEnvConstant.CORE_PEER_LOCA
  */
 public class OrdererDeployment extends FabricDeployment {
 
-
-    @Override
-    protected V1PodTemplateSpec createPodTemplateSpec() {
-        V1PodTemplateSpec v1PodTemplateSpec = new V1PodTemplateSpec();
-        v1PodTemplateSpec.setMetadata(new V1ObjectMeta().labels(createPodTemplateSpecMetaDataLabels("orderer1", "orderer")));
-        v1PodTemplateSpec.setSpec(createPodSpec(null));
-        return null;
-    }
-
-    @Override
-    protected V1PodSpec createPodSpec(List<Container> containers) {
-        new V1PodSpec().containers(createContainers(containers)).volumes(createVolumes(null))
-        return null;
-    }
-
-
-    private Map<String, String> createPodTemplateSpecMetaDataLabels(String orgName, String peerName) {
-        return new HashMap<String, String>() {
-            {
-                put("app", "hyperledger");
-                put("role", "orderer");
-                put("org", orgName);
-                put("name", peerName);
-            }
-        };
-    }
 
     @Override
     protected Map<String, String> createEnvVarMap() {
@@ -74,6 +42,18 @@ public class OrdererDeployment extends FabricDeployment {
         evnVarMap.put(ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY_NAME, ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY);
         evnVarMap.put(ORDERER_GENERAL_CLUSTER_ROOTCAS_NAME, ORDERER_GENERAL_CLUSTER_ROOTCAS);
         return evnVarMap;
+    }
+
+    protected List<V1VolumeMount> createVolumeMounts(List<Map<String, String>> paths) {
+        List<V1VolumeMount> v1VolumeMounts = new ArrayList<>();
+        v1VolumeMounts.add(createVolumeMount("current-dir", "/var/hyperledger/orderer/msp",
+            "crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp"));
+        v1VolumeMounts.add(createVolumeMount("current-dir", "/var/hyperledger/orderer/tls",
+            "crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls"));
+        v1VolumeMounts.add(createVolumeMount("current-dir", "/var/hyperledger/orderer/orderer.genesis.block",
+            "crypto-config/genesis.block"));
+        v1VolumeMounts.add(createVolumeMount("run", "/host/var/run"));
+        return v1VolumeMounts;
     }
 
 }

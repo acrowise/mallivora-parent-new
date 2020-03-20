@@ -9,6 +9,33 @@ public class Container {
     private String image;
     private Map<String, String> envVarsMap;
     private List<Map<String, String>> volumeMounts;
+    private List<String> commands;
+    private String workingDir;
+    private List<Integer> ports;
+
+    public List<String> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(List<String> commands) {
+        this.commands = commands;
+    }
+
+    public String getWorkingDir() {
+        return workingDir;
+    }
+
+    public void setWorkingDir(String workingDir) {
+        this.workingDir = workingDir;
+    }
+
+    public List<Integer> getPorts() {
+        return ports;
+    }
+
+    public void setPorts(List<Integer> ports) {
+        this.ports = ports;
+    }
 
     public String getName() {
         return name;

@@ -43,25 +43,25 @@ public class FabricContainerEnvConstant {
     public static final String ORDERER_GENERAL_GENESISMETHOD_NAME = "ORDERER_GENERAL_GENESISMETHOD";
     public static final String ORDERER_GENERAL_GENESISMETHOD = "file";
     public static final String ORDERER_GENERAL_GENESISFILE_NAME = "ORDERER_GENERAL_GENESISFILE";
-    public static final String ORDERER_GENERAL_GENESISFILE = null;
+    public static final String ORDERER_GENERAL_GENESISFILE = "/var/hyperledger/orderer/orderer.genesis.block";
     public static final String ORDERER_GENERAL_LOCALMSPID_NAME = "ORDERER_GENERAL_LOCALMSPID";
-    public static final String ORDERER_GENERAL_LOCALMSPID = null;
+    public static final String ORDERER_GENERAL_LOCALMSPID = "OrdererMSP";
     public static final String ORDERER_GENERAL_LOCALMSPDIR_NAME = "ORDERER_GENERAL_LOCALMSPDIR";
-    public static final String ORDERER_GENERAL_LOCALMSPDIR = null;
+    public static final String ORDERER_GENERAL_LOCALMSPDIR = "/var/hyperledger/orderer/msp";
 
     public static final String ORDERER_GENERAL_TLS_ENABLED_NAME = "ORDERER_GENERAL_TLS_ENABLED";
-    public static final String ORDERER_GENERAL_TLS_ENABLED = null;
+    public static final String ORDERER_GENERAL_TLS_ENABLED = "true";
     public static final String ORDERER_GENERAL_TLS_PRIVATEKEY_NAME = "ORDERER_GENERAL_TLS_PRIVATEKEY";
-    public static final String ORDERER_GENERAL_TLS_PRIVATEKEY = null;
+    public static final String ORDERER_GENERAL_TLS_PRIVATEKEY = "/var/hyperledger/orderer/tls/server.key";
     public static final String ORDERER_GENERAL_TLS_CERTIFICATE_NAME = "ORDERER_GENERAL_TLS_CERTIFICATE";
-    public static final String ORDERER_GENERAL_TLS_CERTIFICATE = null;
+    public static final String ORDERER_GENERAL_TLS_CERTIFICATE = "/var/hyperledger/orderer/tls/server.crt";
     public static final String ORDERER_GENERAL_TLS_ROOTCAS_NAME = "ORDERER_GENERAL_TLS_ROOTCAS";
-    public static final String ORDERER_GENERAL_TLS_ROOTCAS = null;
+    public static final String ORDERER_GENERAL_TLS_ROOTCAS = "[/var/hyperledger/orderer/tls/ca.crt]";
     public static final String ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE_NAME = "ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE";
-    public static final String ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE = null;
+    public static final String ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE = "/var/hyperledger/orderer/tls/server.crt";
     public static final String ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY_NAME = "ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY";
-    public static final String ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY = null;
+    public static final String ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY = "/var/hyperledger/orderer/tls/server.key";
     public static final String ORDERER_GENERAL_CLUSTER_ROOTCAS_NAME = "ORDERER_GENERAL_CLUSTER_ROOTCAS";
-    public static final String ORDERER_GENERAL_CLUSTER_ROOTCAS = null;
+    public static final String ORDERER_GENERAL_CLUSTER_ROOTCAS = "[/var/hyperledger/orderer/tls/ca.crt]";
 
 }
